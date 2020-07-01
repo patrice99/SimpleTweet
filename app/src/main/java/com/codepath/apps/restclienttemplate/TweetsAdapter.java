@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvTime = itemView.findViewById(R.id.tvTime);
             ivMedia = itemView.findViewById(R.id.ivMedia);
 
+            //set on click listener
+            itemView.setOnClickListener(this);
+
 
         }
 
@@ -97,6 +101,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             int position = getAdapterPosition();
             //get tweet at that position
             Tweet tweet = tweets.get(position);
+            Log.i(TweetsAdapter.class.getSimpleName(), "Tweet at position" + position + "clicked");
             //fire an intent to TweetDetailsActivity class
             Intent intent = new Intent(context, TweetDetailsActivity.class);
             intent.putExtra("tweet", Parcels.wrap(tweet));

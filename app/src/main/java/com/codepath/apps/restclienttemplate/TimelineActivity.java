@@ -70,6 +70,8 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setAdapter(adapter);
         populateHomeTimeline();
 
+
+
         
     }
 
