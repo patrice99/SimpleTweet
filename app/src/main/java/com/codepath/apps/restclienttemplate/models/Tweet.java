@@ -65,6 +65,15 @@ public class Tweet {
             e.printStackTrace();
         }
 
+        
+        //shortened form of time stamp
+        String[] num = relativeDate.split(" ");
+        relativeDate = num[0] + num[1].charAt(0);
+
+
+
+
+
         return relativeDate;
     }
 
