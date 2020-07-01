@@ -78,5 +78,19 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     }
 
 
+    //helper method to clear items from the underlying data set
+    public void clear() {
+        tweets.clear();
+        notifyDataSetChanged();
+    }
+
+    //helper method to add a list of items to the underlying data set
+    public void addAll(List<Tweet> tweetList) {
+        tweets.addAll(tweetList);
+        notifyDataSetChanged();
+    }
+
+
+
 
 }
