@@ -45,6 +45,15 @@ public class TimelineActivity extends AppCompatActivity {
 
         client = TwitterApp.getRestClient(this);
 
+        swipeContainer = findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.i(TAG, "Fetching new data");
+                populateHomeTimeline();
+            }
+        });
+
         //Find the recycler View
         rvTweets = findViewById(R.id.rvTweets);
         //Initialize the list of tweets and adapter
@@ -65,8 +74,12 @@ public class TimelineActivity extends AppCompatActivity {
                 Log.i(TAG, "onSuccess" + json.toString());
                 JSONArray jsonArray = json.jsonArray;
                 try {
-                    tweets.addAll(Tweet.fromJsonArray(jsonArray));
-                    adapter.notifyDataSetChanged();
+                    adapter.clear();
+                    adapter.addAll(Tweet.fromJsonArray(jsonArray));
+
+                    //Signal refreshing has finished
+                    swipeContainer.setRefreshing(false);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
