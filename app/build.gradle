@@ -28,6 +28,11 @@ android {
         lintConfig rootProject.file('gradle/lint.xml')
     }
 
+    repositories {
+        google()
+        jcenter()
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -55,4 +60,6 @@ dependencies {
     annotationProcessor 'org.parceler:parceler:1.1.12'
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
+    implementation 'com.google.android.material:material:1.0.0'
 }
