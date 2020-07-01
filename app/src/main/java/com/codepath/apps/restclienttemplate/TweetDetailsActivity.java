@@ -25,12 +25,14 @@ public class TweetDetailsActivity extends AppCompatActivity {
         TextView tvScreenName;
         TextView tvBody;
         TextView tvTimeStamp;
+        TextView tvName;
         ImageView ivProfileImage;
         ImageView ivMedia;
 
         tvScreenName = findViewById(R.id.tvScreenName);
         tvBody = findViewById(R.id.tvBody);
         tvTimeStamp = findViewById(R.id.tvTimeStamp);
+        tvName = findViewById(R.id.tvName);
         ivProfileImage = findViewById(R.id.ivProfileImage);
         ivMedia = findViewById(R.id.ivMedia);
 
@@ -40,6 +42,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
         tvScreenName.setText("@" + tweet.user.screenName);
         tvBody.setText(tweet.body);
         tvTimeStamp.setText(tweet.getTimeStamp(tweet.timeStamp) + " " +  tweet.getDateStamp(tweet.timeStamp));
+        tvName.setText(tweet.user.name);
         Glide.with(this).load(tweet.user.profileImageURl).into(ivProfileImage);
         Glide.with(this).load(tweet.photoUrl).into(ivMedia);
 
