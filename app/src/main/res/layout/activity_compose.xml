@@ -28,7 +28,8 @@
             android:minLines="5"
             android:autofillHints=""
             app:counterEnabled="true"
-            app:counterMaxLength="20"/>
+            app:counterMaxLength="20"
+            android:maxLength="280"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
