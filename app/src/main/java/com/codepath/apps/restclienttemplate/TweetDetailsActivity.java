@@ -37,7 +37,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
         //get tweet from intent
         tweet = Parcels.unwrap(getIntent().getParcelableExtra("tweet"));
 
-        tvScreenName.setText(tweet.user.screenName);
+        tvScreenName.setText("@" + tweet.user.screenName);
         tvBody.setText(tweet.body);
         tvTimeStamp.setText(tweet.timeStamp);
         Glide.with(this).load(tweet.user.profileImageURl).into(ivProfileImage);
