@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate.models;
 
 import android.text.format.DateUtils;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,10 +16,12 @@ import java.util.Locale;
 
 @Parcel
 public class Tweet {
+    public static String TAG = "Tweet";
     public String body;
     public String createdAt;
     public User user;
     public String timeStamp;
+    public String photoUrl;
 
     //empty constructor for parceler
     public Tweet(){}
@@ -29,6 +32,12 @@ public class Tweet {
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.timeStamp = jsonObject.getString("created_at");
+
+        try {
+            tweet.photoUrl = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url_https");
+        } catch (JSONException e){
+            Log.i(TAG, "No media attached");
+        }
         return tweet;
     }
 
