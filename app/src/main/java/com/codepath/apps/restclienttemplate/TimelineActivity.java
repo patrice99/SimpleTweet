@@ -102,9 +102,14 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
             //get data from the intent (tweet)
-            Parcels.unwrap(data.getParcelableExtra("tweet"));
+            Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
 
             //update the recycler view with the tweet
+            //Modify the data source of tweets
+            tweets.add(0, tweet);
+            //Update the adapter
+            adapter.notifyItemInserted(0);
+
 
 
         }
