@@ -39,7 +39,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
 
         tvScreenName.setText("@" + tweet.user.screenName);
         tvBody.setText(tweet.body);
-        tvTimeStamp.setText(tweet.timeStamp);
+        tvTimeStamp.setText(tweet.getTimeStamp(tweet.timeStamp) + " " +  tweet.getDateStamp(tweet.timeStamp));
         Glide.with(this).load(tweet.user.profileImageURl).into(ivProfileImage);
         Glide.with(this).load(tweet.photoUrl).into(ivMedia);
 

@@ -77,4 +77,41 @@ public class Tweet {
         return relativeDate;
     }
 
+    public String getTimeStamp(String timeStamp){
+        String toReturn = "";
+        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
+        sf.setLenient(true);
+        try {
+            long dateMillis = sf.parse(timeStamp).getTime();
+            SimpleDateFormat sf2 = new SimpleDateFormat("h:mm a");
+            toReturn =  sf2.format(dateMillis);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return toReturn;
+
+
+    }
+
+    public String getDateStamp(String timeStamp) {
+        String toReturn = "";
+        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
+        sf.setLenient(true);
+        try {
+            long dateMillis = sf.parse(timeStamp).getTime();
+            SimpleDateFormat sf2 = new SimpleDateFormat("EEE, MMM d, ''yy");
+            toReturn = sf2.format(dateMillis);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return toReturn;
+    }
+
+
 }
