@@ -109,6 +109,7 @@ public class TimelineActivity extends AppCompatActivity {
             tweets.add(0, tweet);
             //Update the adapter
             adapter.notifyItemInserted(0);
+            rvTweets.smoothScrollToPosition(0);
 
 
 
