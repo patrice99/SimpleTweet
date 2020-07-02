@@ -19,6 +19,8 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
     //Pass in context and list of tweets'
     Context context;
@@ -89,10 +91,12 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreenName.setText("@" + tweet.user.screenName);
             tvTime.setText(tweet.getRelativeTimeAgo(tweet.timeStamp));
             tvName.setText(tweet.user.name);
-            Glide.with(context).load(tweet.user.profileImageURl).into(ivProfileImage);
+            int radius = 30;
+            int margin = 10;
+            Glide.with(context).load(tweet.user.profileImageURl).transform(new RoundedCornersTransformation(radius, margin)).into(ivProfileImage);
             if (tweet.photoUrl != null){
                 ivMedia.setVisibility(View.VISIBLE);
-                Glide.with(context).load(tweet.photoUrl).into(ivMedia);
+                Glide.with(context).load(tweet.photoUrl).transform(new RoundedCornersTransformation(radius, margin)).into(ivMedia);
             } else {
                 ivMedia.setVisibility(View.GONE);
             }
