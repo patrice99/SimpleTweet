@@ -6,10 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -69,6 +73,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvTime;
         ImageView ivMedia;
         TextView tvName;
+        ImageButton btnReply;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -79,9 +84,22 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvTime = itemView.findViewById(R.id.tvTime);
             ivMedia = itemView.findViewById(R.id.ivMedia);
             tvName = itemView.findViewById(R.id.tvName);
+            btnReply = itemView.findViewById(R.id.btnReply);
 
             //set on click listener
             itemView.setOnClickListener(this);
+            btnReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    Tweet tweet = tweets.get(position);
+                    //fire intent to compose activity
+                    Intent intent = new Intent(context, ComposeActivity.class);
+                    intent.putExtra("screenName", tweet.user.screenName);
+                    context.startActivity(intent);
+                }
+            });
+
 
 
         }
@@ -114,6 +132,11 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             intent.putExtra("tweet", Parcels.wrap(tweet));
             context.startActivity(intent);
         }
+
+
+
+
+
     }
 
 
@@ -128,6 +151,10 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         tweets.addAll(tweetList);
         notifyDataSetChanged();
     }
+
+
+
+
 
 
 

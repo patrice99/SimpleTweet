@@ -36,6 +36,13 @@ public class ComposeActivity extends AppCompatActivity {
 
         client = TwitterApp.getRestClient(this);
 
+        //get intent
+        if ((getIntent().getStringExtra("screenName") != null)){
+            etCompose.setText("@" + getIntent().getStringExtra("screenName") + " ");
+        }
+
+
+
         //Set click listener button
         btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override
