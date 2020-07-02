@@ -9,5 +9,9 @@
     <string name="tweet">Tweet</string>
     <string name="what_s_happening">What\'s happening?</string>
     <string name="mediafile">MediaFile</string>
+    <string name="retweet_button">Retweet Button</string>
+    <string name="like_button">Like Button</string>
+    <string name="reply_button">Reply Button</string>
+    <string name="share_button">share button</string>
 
 </resources>

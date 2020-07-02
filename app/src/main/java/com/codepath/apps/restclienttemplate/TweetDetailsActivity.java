@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Movie;
 import android.media.Image;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,8 +45,12 @@ public class TweetDetailsActivity extends AppCompatActivity {
         tvTimeStamp.setText(tweet.getTimeStamp(tweet.timeStamp) + " " +  tweet.getDateStamp(tweet.timeStamp));
         tvName.setText(tweet.user.name);
         Glide.with(this).load(tweet.user.profileImageURl).into(ivProfileImage);
-        Glide.with(this).load(tweet.photoUrl).into(ivMedia);
-
+        if (tweet.photoUrl != null){
+            ivMedia.setVisibility(View.VISIBLE);
+            Glide.with(this).load(tweet.photoUrl).into(ivMedia);
+        } else {
+            ivMedia.setVisibility(View.GONE);
+        }
 
 
 

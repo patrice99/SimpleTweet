@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="75dp"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:background="@color/cardview_light_background">
 
     <ImageView
         android:id="@+id/ivProfileImage"
@@ -55,8 +56,9 @@
 
     <ImageView
         android:id="@+id/ivMedia"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="300dp"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"
         android:layout_below="@+id/tvBody"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
@@ -74,4 +76,56 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#000000"
         tools:text="User Name" />
+
+    <ImageButton
+        android:id="@+id/btnRetweet"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/ivMedia"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/btnReply"
+        android:backgroundTint="@color/cardview_light_background"
+        android:contentDescription="@string/retweet_button"
+        app:srcCompat="@drawable/ic_vector_retweet" />
+
+    <ImageButton
+        android:id="@+id/btnReply"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/ivMedia"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="2dp"
+        android:backgroundTint="@color/cardview_light_background"
+        android:contentDescription="@string/reply_button"
+        app:srcCompat="@drawable/vector_compose_dm_fab" />
+
+    <ImageButton
+        android:id="@+id/btnLike"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/ivMedia"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/btnRetweet"
+        android:backgroundTint="@color/cardview_light_background"
+        android:contentDescription="@string/like_button"
+        app:srcCompat="@drawable/ic_vector_heart" />
+
+    <ImageButton
+        android:id="@+id/btnShare"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/ivMedia"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="40dp"
+        android:layout_toEndOf="@+id/btnLike"
+        android:backgroundTint="@color/cardview_light_background"
+        android:contentDescription="@string/share_button"
+        android:tint="@color/medium_gray"
+        app:srcCompat="?attr/actionModeShareDrawable" />
+
 </RelativeLayout>
