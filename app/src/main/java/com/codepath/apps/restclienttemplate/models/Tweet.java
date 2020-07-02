@@ -23,6 +23,10 @@ public class Tweet {
     public String timeStamp;
     public String photoUrl;
     public long id;
+    public boolean retweeted;
+    public int retweet_count;
+    public boolean liked;
+    public int like_count;
 
     //empty constructor for parceler
     public Tweet(){}
@@ -34,6 +38,10 @@ public class Tweet {
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.timeStamp = jsonObject.getString("created_at");
         tweet.id = jsonObject.getLong("id");
+        tweet.retweeted = jsonObject.getBoolean("retweeted");
+        tweet.retweet_count = jsonObject.getInt("retweet_count");
+        tweet.liked = jsonObject.getBoolean("favorited");
+        tweet.like_count = jsonObject.getInt("favorite_count");
 
         try {
             tweet.photoUrl = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url_https");
