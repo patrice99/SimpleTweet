@@ -47,7 +47,6 @@ public class ComposeActivity extends AppCompatActivity {
         btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Make an API call to twitter to publish tweet.
                 String tweetContent = etCompose.getText().toString();
                 //if tweet content is empty, retry
                 if (tweetContent.isEmpty()) {

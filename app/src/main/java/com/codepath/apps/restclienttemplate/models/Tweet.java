@@ -22,6 +22,7 @@ public class Tweet {
     public User user;
     public String timeStamp;
     public String photoUrl;
+    public long id;
 
     //empty constructor for parceler
     public Tweet(){}
@@ -32,6 +33,7 @@ public class Tweet {
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.timeStamp = jsonObject.getString("created_at");
+        tweet.id = jsonObject.getLong("id");
 
         try {
             tweet.photoUrl = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url_https");

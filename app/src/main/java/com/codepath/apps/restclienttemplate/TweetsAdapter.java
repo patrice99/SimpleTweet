@@ -19,22 +19,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
+import org.json.JSONException;
 import org.parceler.Parcels;
 
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import okhttp3.Headers;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
     //Pass in context and list of tweets'
     Context context;
     List<Tweet> tweets;
+    TwitterClient client;
+    onClickListener clickListener;
+
+    public interface onClickListener {
+        void onReplyAction(int position);
+        void onRetweetAction(int position);
+        void onLikeAction(int position);
+        void onShareAction(int position);
+    }
+
 
     //constructor
-    public TweetsAdapter(Context context, List<Tweet> tweets){
+    public TweetsAdapter(Context context, List<Tweet> tweets, onClickListener clickListener){
         this.context = context;
         this.tweets = tweets;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -44,6 +58,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
 
         return new ViewHolder(view);
+
     }
 
     @Override
@@ -54,6 +69,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
         //bind the tweet with the viewholder
         holder.bind(tweet);
+
+
+
 
 
     }
@@ -76,6 +94,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvName;
         ImageButton btnReply;
         ImageButton btnRetweet;
+        ImageButton btnLike;
+        ImageButton btnShare;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -88,35 +108,22 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvName = itemView.findViewById(R.id.tvName);
             btnReply = itemView.findViewById(R.id.btnReply);
             btnRetweet = itemView.findViewById(R.id.btnRetweet);
+            btnLike = itemView.findViewById(R.id.btnLike);
+            btnShare = itemView.findViewById(R.id.btnShare);
+
+            //initializing the client
+            client = new TwitterClient(context);
 
             //set on click listener
             itemView.setOnClickListener(this);
-            btnReply.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //handle a reply
-                    int position = getAdapterPosition();
-                    Tweet tweet = tweets.get(position);
-                    //fire intent to compose activity
-                    Intent intent = new Intent(context, ComposeActivity.class);
-                    //set compose the screenName of the user of that tweet
-                    intent.putExtra("screenName", tweet.user.screenName);
-                    context.startActivity(intent);
-                }
-            });
-            btnRetweet.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //handle retweet
-                    
-                }
-            });
+
 
 
 
 
         }
 
+        //to bind views
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
             tvScreenName.setText("@" + tweet.user.screenName);
@@ -131,6 +138,41 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             } else {
                 ivMedia.setVisibility(View.GONE);
             }
+
+            btnReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListener.onReplyAction(getAdapterPosition());
+                }
+            });
+
+
+
+            btnRetweet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListener.onRetweetAction(getAdapterPosition());
+
+                }
+            });
+
+            btnLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListener.onLikeAction(getAdapterPosition());
+                }
+            });
+
+            btnShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListener.onShareAction(getAdapterPosition());
+                }
+            });
+
+
+
+
         }
 
         @Override
@@ -144,6 +186,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             Intent intent = new Intent(context, TweetDetailsActivity.class);
             intent.putExtra("tweet", Parcels.wrap(tweet));
             context.startActivity(intent);
+
         }
 
 

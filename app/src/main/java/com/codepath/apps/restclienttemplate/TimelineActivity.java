@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -65,7 +63,7 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets = findViewById(R.id.rvTweets);
         //Initialize the list of tweets and adapter
         tweets = new ArrayList<>();
-        adapter = new TweetsAdapter(this, tweets);
+        adapter = new TweetsAdapter(this, tweets, onClickListener);
         //Recycler view setup: layout manager and adapter
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
@@ -140,6 +138,58 @@ public class TimelineActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    TweetsAdapter.onClickListener onClickListener = new TweetsAdapter.onClickListener() {
+        @Override
+        public void onReplyAction(int position) {
+            //handle a reply
+            Tweet tweet = tweets.get(position);
+            //fire intent to compose activity
+            Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
+            //set compose the screenName of the user of that tweet
+            intent.putExtra("screenName", tweet.user.screenName);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onRetweetAction(int position) {
+            //handle retweet
+            // Make an API call to twitter to publish retweet
+            Log.i(TweetsAdapter.class.getSimpleName(), "Checking Logging");
+            client.publishRetweet(tweets.get(position).id, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    Log.i(TweetsAdapter.class.getSimpleName(), "onSuccess to retweet tweet");
+                    //set retweet color to green
+                }
+
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Log.e(TweetsAdapter.class.getSimpleName(), "onFailiure to retweet tweet", throwable);
+
+
+                }
+
+            });
+
+        }
+
+        @Override
+        public void onLikeAction(int position) {
+
+        }
+
+        @Override
+        public void onShareAction(int position) {
+
+        }
+
+
+    };
+
+
+
+
 
 
 
