@@ -156,10 +156,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 public void onClick(View view) {
                     if (tweet.retweeted == false){
                         clickListener.onRetweetAction(getAdapterPosition());
-                        Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_retweet)).into(btnRetweet);
                     } else {
                         clickListener.onUnretweetAction(getAdapterPosition());
-
                     }
                 }
             });

@@ -172,11 +172,35 @@ public class TimelineActivity extends AppCompatActivity {
 
             });
 
+            tweets.get(position).retweeted = true;
+            adapter.notifyItemChanged(position);
+
         }
 
         @Override
         public void onUnretweetAction(int position) {
-            
+            //handle unretweet
+            // Make an API call to twitter to publish retweet
+            Log.i(TweetsAdapter.class.getSimpleName(), "Checking Logging");
+            client.publishUnretweet(tweets.get(position).id, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    Log.i(TweetsAdapter.class.getSimpleName(), "onSuccess to retweet tweet");
+                }
+
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Log.e(TweetsAdapter.class.getSimpleName(), "onFailiure to retweet tweet", throwable);
+
+
+                }
+
+            });
+
+            tweets.get(position).retweeted = false;
+            adapter.notifyItemChanged(position);
+
+
         }
 
         @Override
