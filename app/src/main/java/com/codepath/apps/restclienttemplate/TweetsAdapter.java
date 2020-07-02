@@ -91,8 +91,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreenName.setText("@" + tweet.user.screenName);
             tvTime.setText(tweet.getRelativeTimeAgo(tweet.timeStamp));
             tvName.setText(tweet.user.name);
-            int radius = 30;
-            int margin = 10;
+            int radius = 40;
+            int margin = 20;
             Glide.with(context).load(tweet.user.profileImageURl).transform(new RoundedCornersTransformation(radius, margin)).into(ivProfileImage);
             if (tweet.photoUrl != null){
                 ivMedia.setVisibility(View.VISIBLE);
