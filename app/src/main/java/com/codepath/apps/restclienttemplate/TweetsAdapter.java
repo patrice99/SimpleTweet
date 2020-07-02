@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,6 +75,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageView ivMedia;
         TextView tvName;
         ImageButton btnReply;
+        ImageButton btnRetweet;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -85,20 +87,31 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ivMedia = itemView.findViewById(R.id.ivMedia);
             tvName = itemView.findViewById(R.id.tvName);
             btnReply = itemView.findViewById(R.id.btnReply);
+            btnRetweet = itemView.findViewById(R.id.btnRetweet);
 
             //set on click listener
             itemView.setOnClickListener(this);
             btnReply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //handle a reply
                     int position = getAdapterPosition();
                     Tweet tweet = tweets.get(position);
                     //fire intent to compose activity
                     Intent intent = new Intent(context, ComposeActivity.class);
+                    //set compose the screenName of the user of that tweet
                     intent.putExtra("screenName", tweet.user.screenName);
                     context.startActivity(intent);
                 }
             });
+            btnRetweet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //handle retweet
+                    
+                }
+            });
+
 
 
 
