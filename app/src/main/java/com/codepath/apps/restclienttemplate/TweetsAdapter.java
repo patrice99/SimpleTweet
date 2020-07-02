@@ -39,6 +39,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     public interface onClickListener {
         void onReplyAction(int position);
         void onRetweetAction(int position);
+        void onUnretweetAction(int position);
         void onLikeAction(int position);
         void onShareAction(int position);
     }
@@ -122,7 +123,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         }
 
         //to bind views
-        public void bind(Tweet tweet) {
+        public void bind(final Tweet tweet) {
             tvBody.setText(tweet.body);
             tvScreenName.setText("@" + tweet.user.screenName);
             tvTime.setText(tweet.getRelativeTimeAgo(tweet.timeStamp));
@@ -145,12 +146,21 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             });
 
 
-
+            if (tweet.retweeted == true){
+                Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_retweet)).into(btnRetweet);
+            } else {
+                Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_retweet_stroke)).into(btnRetweet);
+            }
             btnRetweet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    clickListener.onRetweetAction(getAdapterPosition());
-                    Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_retweet)).into(btnRetweet);
+                    if (tweet.retweeted == false){
+                        clickListener.onRetweetAction(getAdapterPosition());
+                        Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_retweet)).into(btnRetweet);
+                    } else {
+                        clickListener.onUnretweetAction(getAdapterPosition());
+
+                    }
                 }
             });
 

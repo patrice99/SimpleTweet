@@ -175,6 +175,11 @@ public class TimelineActivity extends AppCompatActivity {
         }
 
         @Override
+        public void onUnretweetAction(int position) {
+            
+        }
+
+        @Override
         public void onLikeAction(int position) {
 
         }
