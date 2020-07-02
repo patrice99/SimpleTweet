@@ -119,8 +119,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
 
 
-
-
         }
 
         //to bind views
@@ -152,7 +150,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 @Override
                 public void onClick(View view) {
                     clickListener.onRetweetAction(getAdapterPosition());
-
+                    Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_retweet)).into(btnRetweet);
                 }
             });
 

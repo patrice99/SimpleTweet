@@ -92,7 +92,7 @@ android:background="@color/cardview_light_background">
         android:layout_toEndOf="@+id/btnReply"
         android:backgroundTint="@color/cardview_light_background"
         android:contentDescription="@string/retweet_button"
-        app:srcCompat="@drawable/ic_vector_retweet" />
+        app:srcCompat="@drawable/ic_vector_retweet_stroke" />
 
     <ImageButton
         android:id="@+id/btnReply"
@@ -106,31 +106,31 @@ android:background="@color/cardview_light_background">
         android:contentDescription="@string/reply_button"
         app:srcCompat="@drawable/vector_compose_dm_fab" />
 
-<ImageButton
-    android:id="@+id/btnLike"
-    android:layout_width="30dp"
-    android:layout_height="30dp"
-    android:layout_below="@+id/ivMedia"
-    android:layout_marginStart="65dp"
-    android:layout_marginTop="0dp"
-    android:layout_toEndOf="@+id/btnRetweet"
-    android:backgroundTint="@color/cardview_light_background"
-    android:contentDescription="@string/like_button"
-    app:srcCompat="@drawable/ic_vector_heart" />
+    <ImageButton
+        android:id="@+id/btnLike"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/ivMedia"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/btnRetweet"
+        android:backgroundTint="@color/cardview_light_background"
+        android:contentDescription="@string/like_button"
+        app:srcCompat="@drawable/ic_vector_heart_stroke" />
 
-<ImageButton
-    android:id="@+id/btnShare"
-    android:layout_width="30dp"
-    android:layout_height="30dp"
-    android:layout_below="@+id/ivMedia"
-    android:layout_alignParentEnd="true"
-    android:layout_marginStart="65dp"
-    android:layout_marginTop="0dp"
-    android:layout_marginEnd="40dp"
-    android:layout_toEndOf="@+id/btnLike"
-    android:backgroundTint="@color/cardview_light_background"
-    android:contentDescription="@string/share_button"
-    android:tint="@color/medium_gray"
-    app:srcCompat="?attr/actionModeShareDrawable" />
+    <ImageButton
+        android:id="@+id/btnShare"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/ivMedia"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="40dp"
+        android:layout_toEndOf="@+id/btnLike"
+        android:backgroundTint="@color/cardview_light_background"
+        android:contentDescription="@string/share_button"
+        android:tint="@color/medium_gray"
+        app:srcCompat="?attr/actionModeShareDrawable" />
 
 </RelativeLayout>
