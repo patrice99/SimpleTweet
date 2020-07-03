@@ -42,6 +42,8 @@ android:background="@color/cardview_light_background">
     android:layout_toEndOf="@+id/ivProfileImage"
     android:textColor="#D0000000"
     android:textSize="18sp"
+    android:autoLink="all"
+    android:linksClickable="true"
     tools:text="This is my tweet!" />
 
 <TextView
