@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.codepath.apps.restclienttemplate.databinding.ActivityTweetDetailsBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -29,54 +30,36 @@ public class TweetDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tweet_details);
+
+        //using ViewBinding to get ride of boilerplate code
+        final ActivityTweetDetailsBinding binding = ActivityTweetDetailsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         //initialize client
         client = TwitterApp.getRestClient(this);
 
-        TextView tvScreenName;
-        TextView tvBody;
-        TextView tvTimeStamp;
-        TextView tvName;
-        ImageView ivProfileImage;
-        ImageView ivMedia;
-        final ImageButton btnRetweet;
-        final ImageButton btnLike;
-        ImageButton btnReply;
-        ImageButton btnShare;
-
-        tvScreenName = findViewById(R.id.tvScreenName);
-        tvBody = findViewById(R.id.tvBody);
-        tvTimeStamp = findViewById(R.id.tvTimeStamp);
-        tvName = findViewById(R.id.tvName);
-        ivProfileImage = findViewById(R.id.ivProfileImage);
-        ivMedia = findViewById(R.id.ivMedia);
-        btnRetweet = findViewById(R.id.btnRetweet);
-        btnLike = findViewById(R.id.btnLike);
-        btnReply = findViewById(R.id.btnReply);
-        btnShare = findViewById(R.id.btnShare);
 
         //get tweet from intent
         tweet = Parcels.unwrap(getIntent().getParcelableExtra("tweet"));
 
-        tvScreenName.setText("@" + tweet.user.screenName);
-        tvBody.setText(tweet.body);
-        tvTimeStamp.setText(tweet.getTimeStamp(tweet.timeStamp) + " " +  tweet.getDateStamp(tweet.timeStamp));
-        tvName.setText(tweet.user.name);
-        Glide.with(this).load(tweet.user.profileImageURl).into(ivProfileImage);
+        binding.tvScreenName.setText("@" + tweet.user.screenName);
+        binding.tvBody.setText(tweet.body);
+        binding.tvTimeStamp.setText(tweet.getTimeStamp(tweet.timeStamp) + " " +  tweet.getDateStamp(tweet.timeStamp));
+        binding.tvName.setText(tweet.user.name);
+        Glide.with(this).load(tweet.user.profileImageURl).into(binding.ivProfileImage);
         if (tweet.photoUrl != null){
-            ivMedia.setVisibility(View.VISIBLE);
-            Glide.with(this).load(tweet.photoUrl).into(ivMedia);
+            binding.ivMedia.setVisibility(View.VISIBLE);
+            Glide.with(this).load(tweet.photoUrl).into(binding.ivMedia);
         } else {
-            ivMedia.setVisibility(View.GONE);
+            binding.ivMedia.setVisibility(View.GONE);
         }
 
         if (tweet.retweeted == true){
-            Glide.with(this).load(this.getDrawable(R.drawable.ic_vector_retweet)).into(btnRetweet);
+            Glide.with(this).load(this.getDrawable(R.drawable.ic_vector_retweet)).into(binding.btnRetweet);
         } else {
-            Glide.with(this).load(this.getDrawable(R.drawable.ic_vector_retweet_stroke)).into(btnRetweet);
+            Glide.with(this).load(this.getDrawable(R.drawable.ic_vector_retweet_stroke)).into(binding.btnRetweet);
         }
-        btnRetweet.setOnClickListener(new View.OnClickListener() {
+        binding.btnRetweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tweet.retweeted == false) {
@@ -98,7 +81,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
                     });
 
                     tweet.retweeted = true;
-                    Glide.with(TweetDetailsActivity.this).load(TweetDetailsActivity.this.getDrawable(R.drawable.ic_vector_retweet)).into(btnRetweet);
+                    Glide.with(TweetDetailsActivity.this).load(TweetDetailsActivity.this.getDrawable(R.drawable.ic_vector_retweet)).into(binding.btnRetweet);
                 } else {
                     //handle unretweet
                     // Make an API call to twitter to publish unretweet
@@ -118,7 +101,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
                     });
 
                     tweet.retweeted = false;
-                    Glide.with(TweetDetailsActivity.this).load(TweetDetailsActivity.this.getDrawable(R.drawable.ic_vector_retweet_stroke)).into(btnRetweet);
+                    Glide.with(TweetDetailsActivity.this).load(TweetDetailsActivity.this.getDrawable(R.drawable.ic_vector_retweet_stroke)).into(binding.btnRetweet);
 
                 }
 
@@ -126,11 +109,11 @@ public class TweetDetailsActivity extends AppCompatActivity {
         });
 
         if (tweet.liked == true){
-            Glide.with(this).load(this.getDrawable(R.drawable.ic_vector_heart)).into(btnLike);
+            Glide.with(this).load(this.getDrawable(R.drawable.ic_vector_heart)).into(binding.btnLike);
         } else {
-            Glide.with(this).load(this.getDrawable(R.drawable.ic_vector_heart_stroke)).into(btnLike);
+            Glide.with(this).load(this.getDrawable(R.drawable.ic_vector_heart_stroke)).into(binding.btnLike);
         }
-        btnLike.setOnClickListener(new View.OnClickListener() {
+        binding.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tweet.liked == false) {
@@ -150,7 +133,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
                     });
 
                     tweet.liked = true;
-                    Glide.with(TweetDetailsActivity.this).load(TweetDetailsActivity.this.getDrawable(R.drawable.ic_vector_heart)).into(btnLike);
+                    Glide.with(TweetDetailsActivity.this).load(TweetDetailsActivity.this.getDrawable(R.drawable.ic_vector_heart)).into(binding.btnLike);
 
                 } else {
                     client.destroyFavorite(tweet.id, new JsonHttpResponseHandler() {
@@ -169,13 +152,13 @@ public class TweetDetailsActivity extends AppCompatActivity {
                     });
 
                     tweet.liked = false;
-                    Glide.with(TweetDetailsActivity.this).load(TweetDetailsActivity.this.getDrawable(R.drawable.ic_vector_heart_stroke)).into(btnLike);
+                    Glide.with(TweetDetailsActivity.this).load(TweetDetailsActivity.this.getDrawable(R.drawable.ic_vector_heart_stroke)).into(binding.btnLike);
 
                 }
             }
         });
 
-        btnReply.setOnClickListener(new View.OnClickListener() {
+        binding.btnReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //handle a reply
