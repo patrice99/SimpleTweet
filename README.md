@@ -48,7 +48,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<https://github.com/patrice99/SimpleTweet/blob/master/Kapture%202020-07-03%20at%201.58.52.gif?raw=true' />
+<img src='https://github.com/patrice99/SimpleTweet/blob/master/Kapture%202020-07-03%20at%201.58.52.gif?raw=true' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [Kap](https://getkap.co/).
 
