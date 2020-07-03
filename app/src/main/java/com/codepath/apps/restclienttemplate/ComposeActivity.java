@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.databinding.ActivityComposeBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -22,32 +23,31 @@ public class ComposeActivity extends AppCompatActivity {
 
     public static final int MAX_TWEET_LENGTH = 140;
 
-    EditText etCompose;
-    Button btnTweet;
+
     TwitterClient client;
     String TAG = "ComposeActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compose);
-        etCompose = findViewById(R.id.tfCompose);
-        btnTweet = findViewById(R.id.btnTweet);
+        final ActivityComposeBinding binding = ActivityComposeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
 
         client = TwitterApp.getRestClient(this);
 
         //get intent
         if ((getIntent().getStringExtra("screenName") != null)){
-            etCompose.setText("@" + getIntent().getStringExtra("screenName") + " ");
+            binding.tfCompose.setText("@" + getIntent().getStringExtra("screenName") + " ");
         }
 
 
 
         //Set click listener button
-        btnTweet.setOnClickListener(new View.OnClickListener() {
+        binding.btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String tweetContent = etCompose.getText().toString();
+                String tweetContent = binding.tfCompose.getText().toString();
                 //if tweet content is empty, retry
                 if (tweetContent.isEmpty()) {
                     Toast.makeText(ComposeActivity.this, "Sorry, your tweet cannot be empty", Toast.LENGTH_LONG).show();
