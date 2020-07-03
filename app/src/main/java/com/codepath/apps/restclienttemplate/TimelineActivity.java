@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 
 import com.codepath.apps.restclienttemplate.databinding.ActivityTimelineBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -38,6 +39,7 @@ public class TimelineActivity extends AppCompatActivity {
     TweetsAdapter adapter;
     SwipeRefreshLayout swipeContainer;
     EndlessRecyclerViewScrollListener scrollListener;
+    ProgressBar pb;
 
 
     @Override
@@ -88,7 +90,7 @@ public class TimelineActivity extends AppCompatActivity {
         //Add the scroll listener to the recycler view
         rvTweets.addOnScrollListener(scrollListener);
 
-
+        pb = binding.pbLoading;
 
         populateHomeTimeline();
 
@@ -104,12 +106,14 @@ public class TimelineActivity extends AppCompatActivity {
 
     private void loadMoreData() {
         // Send an API request to retrieve appropriate paginated data
+        pb.setVisibility(ProgressBar.VISIBLE);
         client.getNextPageOfTweets(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "onSuccess for load more data");
                 //Deserialize and construct new model objects from the API response
                 JSONArray jsonArray = json.jsonArray;
+                pb.setVisibility(ProgressBar.INVISIBLE);
                 try {
                     List<Tweet> tweets = Tweet.fromJsonArray(jsonArray);
                     //Append the new data objects to the existing set of items inside the array of items
@@ -129,9 +133,11 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     private void populateHomeTimeline() {
+        pb.setVisibility(ProgressBar.VISIBLE);
         client.getTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
+                pb.setVisibility(ProgressBar.INVISIBLE);
                 Log.i(TAG, "onSuccess" + json.toString());
                 JSONArray jsonArray = json.jsonArray;
                 try {
@@ -207,9 +213,11 @@ public class TimelineActivity extends AppCompatActivity {
         public void onRetweetAction(int position) {
             //handle retweet
             // Make an API call to twitter to publish retweet
+            pb.setVisibility(ProgressBar.VISIBLE);
             client.publishRetweet(tweets.get(position).id, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    pb.setVisibility(ProgressBar.INVISIBLE);
                     Log.i(TweetsAdapter.class.getSimpleName(), "onSuccess to retweet tweet");
                     //set retweet color to green
                 }
@@ -232,9 +240,11 @@ public class TimelineActivity extends AppCompatActivity {
         public void onUnretweetAction(int position) {
             //handle unretweet
             // Make an API call to twitter to publish unretweet
+            pb.setVisibility(ProgressBar.VISIBLE);
             client.publishUnretweet(tweets.get(position).id, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    pb.setVisibility(ProgressBar.INVISIBLE);
                     Log.i(TweetsAdapter.class.getSimpleName(), "onSuccess to unretweet tweet");
                 }
 
@@ -255,9 +265,11 @@ public class TimelineActivity extends AppCompatActivity {
 
         @Override
         public void onLikeAction(int position) {
+            pb.setVisibility(ProgressBar.VISIBLE);
             client.createFavorite(tweets.get(position).id, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    pb.setVisibility(ProgressBar.INVISIBLE);
                     Log.i(TweetsAdapter.class.getSimpleName(), "onSuccess to favorite tweet");
                 }
 
@@ -279,9 +291,11 @@ public class TimelineActivity extends AppCompatActivity {
 
         @Override
         public void onUnlike(int position) {
+            pb.setVisibility(ProgressBar.VISIBLE);
             client.destroyFavorite(tweets.get(position).id, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    pb.setVisibility(ProgressBar.INVISIBLE);
                     Log.i(TweetsAdapter.class.getSimpleName(), "onSuccess to Unfavorite tweet");
                 }
 
