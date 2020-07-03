@@ -18,6 +18,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.codepath.apps.restclienttemplate.databinding.ItemTweetBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -57,9 +58,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //For each row, inflate the layout for a tweet
-        View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
+        ItemTweetBinding binding = ItemTweetBinding.inflate(LayoutInflater.from(context), parent, false);
+        return new ViewHolder(binding);
 
-        return new ViewHolder(view);
 
     }
 
@@ -87,37 +88,20 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
     //Define a viewholder
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        ImageView ivProfileImage;
-        TextView tvBody;
-        TextView tvScreenName;
-        TextView tvTime;
-        ImageView ivMedia;
-        TextView tvName;
-        ImageButton btnReply;
-        ImageButton btnRetweet;
-        ImageButton btnLike;
-        ImageButton btnShare;
+        ItemTweetBinding binding;
 
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
-            tvBody = itemView.findViewById(R.id.tvBody);
-            tvScreenName = itemView.findViewById(R.id.tvScreenName);
-            tvTime = itemView.findViewById(R.id.tvTime);
-            ivMedia = itemView.findViewById(R.id.ivMedia);
-            tvName = itemView.findViewById(R.id.tvName);
-            btnReply = itemView.findViewById(R.id.btnReply);
-            btnRetweet = itemView.findViewById(R.id.btnRetweet);
-            btnLike = itemView.findViewById(R.id.btnLike);
-            btnShare = itemView.findViewById(R.id.btnShare);
+
+        public ViewHolder(@NonNull ItemTweetBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+
 
             //initializing the client
             client = new TwitterClient(context);
 
             //set on click listener
-            itemView.setOnClickListener(this);
+            binding.getRoot().setOnClickListener(this);
 
 
 
@@ -125,21 +109,21 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
         //to bind views
         public void bind(final Tweet tweet) {
-            tvBody.setText(tweet.body);
-            tvScreenName.setText("@" + tweet.user.screenName);
-            tvTime.setText(tweet.getRelativeTimeAgo(tweet.timeStamp));
-            tvName.setText(tweet.user.name);
+            binding.tvBody.setText(tweet.body);
+            binding.tvScreenName.setText("@" + tweet.user.screenName);
+            binding.tvTime.setText(tweet.getRelativeTimeAgo(tweet.timeStamp));
+            binding.tvName.setText(tweet.user.name);
             int radius = 40;
             int margin = 20;
-            Glide.with(context).load(tweet.user.profileImageURl).transform(new RoundedCornersTransformation(radius, margin)).into(ivProfileImage);
+            Glide.with(context).load(tweet.user.profileImageURl).transform(new RoundedCornersTransformation(radius, margin)).into(binding.ivProfileImage);
             if (tweet.photoUrl != null){
-                ivMedia.setVisibility(View.VISIBLE);
-                Glide.with(context).load(tweet.photoUrl).transform(new RoundedCornersTransformation(radius, margin)).into(ivMedia);
+                binding.ivMedia.setVisibility(View.VISIBLE);
+                Glide.with(context).load(tweet.photoUrl).transform(new RoundedCornersTransformation(radius, margin)).into(binding.ivMedia);
             } else {
-                ivMedia.setVisibility(View.GONE);
+                binding.ivMedia.setVisibility(View.GONE);
             }
 
-            btnReply.setOnClickListener(new View.OnClickListener() {
+            binding.btnReply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     clickListener.onReplyAction(getAdapterPosition());
@@ -148,11 +132,11 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
 
             if (tweet.retweeted == true){
-                Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_retweet)).into(btnRetweet);
+                Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_retweet)).into(binding.btnRetweet);
             } else {
-                Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_retweet_stroke)).into(btnRetweet);
+                Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_retweet_stroke)).into(binding.btnRetweet);
             }
-            btnRetweet.setOnClickListener(new View.OnClickListener() {
+            binding.btnRetweet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (tweet.retweeted == false){
@@ -164,11 +148,11 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             });
 
             if (tweet.liked == true){
-                Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_heart)).into(btnLike);
+                Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_heart)).into(binding.btnLike);
             } else {
-                Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_heart_stroke)).into(btnLike);
+                Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_heart_stroke)).into(binding.btnLike);
             }
-            btnLike.setOnClickListener(new View.OnClickListener() {
+            binding.btnLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (tweet.liked == true){
@@ -180,7 +164,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 }
             });
 
-            btnShare.setOnClickListener(new View.OnClickListener() {
+            binding.btnShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     clickListener.onShareAction(getAdapterPosition());
