@@ -115,7 +115,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             binding.tvName.setText(tweet.user.name);
             int radius = 40;
             int margin = 20;
-            Glide.with(context).load(tweet.user.profileImageURl).transform(new RoundedCornersTransformation(radius, margin)).into(binding.ivProfileImage);
+            Glide.with(context).load(tweet.user.profileImageURl).circleCrop().into(binding.ivProfileImage);
             if (tweet.photoUrl != null){
                 binding.ivMedia.setVisibility(View.VISIBLE);
                 Glide.with(context).load(tweet.photoUrl).transform(new RoundedCornersTransformation(radius, margin)).into(binding.ivMedia);
