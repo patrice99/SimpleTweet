@@ -171,6 +171,20 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 }
             });
 
+            binding.ivProfileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    //get tweet at that position
+                    Tweet tweet = tweets.get(position);
+                    Log.i(TweetsAdapter.class.getSimpleName(), "Tweet at position" + position + "clicked");
+                    //fire an intent to TweetDetailsActivity class
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.putExtra("tweet", Parcels.wrap(tweet));
+                    context.startActivity(intent);
+                }
+            });
+
 
 
 
