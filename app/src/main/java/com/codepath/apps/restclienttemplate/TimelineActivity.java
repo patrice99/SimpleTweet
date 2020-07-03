@@ -2,6 +2,8 @@ package com.codepath.apps.restclienttemplate;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -74,8 +76,9 @@ public class TimelineActivity extends AppCompatActivity {
         populateHomeTimeline();
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher_twitter_round);
+        getSupportActionBar().setLogo(R.drawable.ic_twitter_logo_whiteonblue);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+
 
 
 

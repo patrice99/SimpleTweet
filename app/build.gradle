@@ -73,4 +73,6 @@ dependencies {
     implementation 'jp.co.cyberagent.android:gpuimage:2.0.4'
     implementation 'androidx.appcompat:appcompat:1.0.0'
 
+
+
 }
