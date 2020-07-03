@@ -44,7 +44,7 @@ android:background="@color/cardview_light_background">
         android:autoLink="all"
         android:linksClickable="true"
         android:textColor="#D0000000"
-        android:textSize="14sp"
+        android:textSize="16sp"
         tools:text="This is my tweet!" />
 
     <TextView
