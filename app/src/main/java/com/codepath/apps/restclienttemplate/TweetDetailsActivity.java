@@ -46,7 +46,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
         binding.tvBody.setText(tweet.body);
         binding.tvTimeStamp.setText(tweet.getTimeStamp(tweet.timeStamp) + " " +  tweet.getDateStamp(tweet.timeStamp));
         binding.tvName.setText(tweet.user.name);
-        Glide.with(this).load(tweet.user.profileImageURl).into(binding.ivProfileImage);
+        Glide.with(this).load(tweet.user.profileImageURl).circleCrop().into(binding.ivProfileImage);
         if (tweet.photoUrl != null){
             binding.ivMedia.setVisibility(View.VISIBLE);
             Glide.with(this).load(tweet.photoUrl).into(binding.ivMedia);
