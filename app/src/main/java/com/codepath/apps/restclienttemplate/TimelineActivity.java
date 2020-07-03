@@ -155,7 +155,6 @@ public class TimelineActivity extends AppCompatActivity {
         public void onRetweetAction(int position) {
             //handle retweet
             // Make an API call to twitter to publish retweet
-            Log.i(TweetsAdapter.class.getSimpleName(), "Checking Logging");
             client.publishRetweet(tweets.get(position).id, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Headers headers, JSON json) {
@@ -180,17 +179,16 @@ public class TimelineActivity extends AppCompatActivity {
         @Override
         public void onUnretweetAction(int position) {
             //handle unretweet
-            // Make an API call to twitter to publish retweet
-            Log.i(TweetsAdapter.class.getSimpleName(), "Checking Logging");
+            // Make an API call to twitter to publish unretweet
             client.publishUnretweet(tweets.get(position).id, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Headers headers, JSON json) {
-                    Log.i(TweetsAdapter.class.getSimpleName(), "onSuccess to retweet tweet");
+                    Log.i(TweetsAdapter.class.getSimpleName(), "onSuccess to unretweet tweet");
                 }
 
                 @Override
                 public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                    Log.e(TweetsAdapter.class.getSimpleName(), "onFailiure to retweet tweet", throwable);
+                    Log.e(TweetsAdapter.class.getSimpleName(), "onFailiure to unretweet tweet", throwable);
 
 
                 }
@@ -205,6 +203,47 @@ public class TimelineActivity extends AppCompatActivity {
 
         @Override
         public void onLikeAction(int position) {
+            client.createFavorite(tweets.get(position).id, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    Log.i(TweetsAdapter.class.getSimpleName(), "onSuccess to favorite tweet");
+                }
+
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Log.e(TweetsAdapter.class.getSimpleName(), "onFailiure to favorite tweet", throwable);
+
+
+                }
+
+            });
+
+            tweets.get(position).liked = true;
+            adapter.notifyItemChanged(position);
+
+
+
+        }
+
+        @Override
+        public void onUnlike(int position) {
+            client.destroyFavorite(tweets.get(position).id, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    Log.i(TweetsAdapter.class.getSimpleName(), "onSuccess to Unfavorite tweet");
+                }
+
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Log.e(TweetsAdapter.class.getSimpleName(), "onFailiure to Unfavorite tweet", throwable);
+
+
+                }
+
+            });
+
+            tweets.get(position).liked = false;
+            adapter.notifyItemChanged(position);
 
         }
 

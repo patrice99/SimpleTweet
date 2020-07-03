@@ -41,6 +41,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         void onRetweetAction(int position);
         void onUnretweetAction(int position);
         void onLikeAction(int position);
+        void onUnlike(int position);
         void onShareAction(int position);
     }
 
@@ -162,10 +163,20 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 }
             });
 
+            if (tweet.liked == true){
+                Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_heart)).into(btnLike);
+            } else {
+                Glide.with(context).load(context.getDrawable(R.drawable.ic_vector_heart_stroke)).into(btnLike);
+            }
             btnLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    clickListener.onLikeAction(getAdapterPosition());
+                    if (tweet.liked == true){
+                        clickListener.onUnlike((getAdapterPosition()));
+
+                    } else{
+                        clickListener.onLikeAction(getAdapterPosition());
+                    }
                 }
             });
 
