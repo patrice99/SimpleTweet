@@ -41,7 +41,8 @@ The following **stretch** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] List anything else that you can get done to improve the app functionality!
+* [x] Profile Activity Added
+   * [x] Can see user bio, followers and following
 
 ## Video Walkthrough
 
