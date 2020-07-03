@@ -133,8 +133,6 @@ public class TimelineActivity extends AppCompatActivity {
             adapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);
 
-
-
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -148,7 +146,7 @@ public class TimelineActivity extends AppCompatActivity {
             Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
             //set compose the screenName of the user of that tweet
             intent.putExtra("screenName", tweet.user.screenName);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CODE);
         }
 
         @Override

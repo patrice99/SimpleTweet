@@ -24,6 +24,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
 
     Tweet tweet;
     TwitterClient client;
+    private final int REQUEST_CODE = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,12 +183,13 @@ public class TweetDetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(TweetDetailsActivity.this, ComposeActivity.class);
                 //set compose the screenName of the user of that tweet
                 intent.putExtra("screenName", tweet.user.screenName);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
 
 
 
     }
+
 
 }
